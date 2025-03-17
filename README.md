@@ -1,6 +1,6 @@
-Anime Catalog in c++ using double linked list, that can: show an interval, find with a filter, write/ overwrite or remove animes.
+<em>Anime Catalog in c++ using double linked list, that can: show an interval, find with a filter, write/ overwrite or remove animes.</em>
 
-➔ User: Luiz Gustavo De Almeida Lopes ➔<a href="https://github.com/LuizGustavo1001/" target="_blank">GitHub</a>
+➔ User: <a href="https://github.com/LuizGustavo1001/">Luiz Gustavo De Almeida Lopes</a>
 
 <em>About the Project</em>
 
@@ -42,4 +42,5 @@ Anime Catalog in c++ using double linked list, that can: show an interval, find 
   
 <em>Possible Future Changes:</em>
 
-➔Use multiple filters; ➔Sort the list directly from the list class, without using the assist vector;
+➔ Use multiple filters; ➔Sort the list directly from the list class, without using the assist vector;
+➔ A way to see if the user has writed the correct type of variable (int in int space, string in string space...)
