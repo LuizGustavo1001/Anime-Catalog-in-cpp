@@ -1,6 +1,6 @@
 Anime Catalog in c++ using double linked list, that can: show an interval, find with a filter, write/ overwrite or remove animes.
 
-➔User: Luiz Gustavo De Almeida Lopes ➔GitHub: <a href="github.com/LuizGustavo1001">github.com/LuizGustavo1001</a>
+➔ User: Luiz Gustavo De Almeida Lopes ➔<a href="https://github.com/LuizGustavo1001/">GitHub</a>
 
 About the Project
 
