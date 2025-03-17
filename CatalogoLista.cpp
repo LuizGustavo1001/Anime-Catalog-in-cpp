@@ -562,7 +562,11 @@ void quickSortGenero(anime vet[], int menor, int maior);
 
 void mensagemErro();
 
-void menu();
+void linguagemPrograma(int& l);
+
+void menu_ptbr();
+
+void menu_en();
 
 void carregaDados(anime& i, string nomeArquivo, listaDupla& lista, int& tam);
 
@@ -573,6 +577,12 @@ listaDupla l1;
 anime info;
 
 int tamanho = 0;
+int linguagem;
+
+linguagemPrograma(linguagem);
+
+
+
 string nomeArquivo = "Catalogo.csv";
 
 carregaDados(info, nomeArquivo, l1, tamanho);
@@ -580,7 +590,12 @@ carregaDados(info, nomeArquivo, l1, tamanho);
 	int resposta;
 
 	do{
-		menu();
+		if(linguagem == true){ // português
+			menu_ptbr();
+		}else{
+			menu_en();
+		}
+		
 		cin >> resposta;
 
 		switch(resposta){
@@ -1019,7 +1034,22 @@ void mensagemErro(){
 	cout << "Retornando ao comeco do codigo\n";
 }
 
-void menu(){
+void linguagemPrograma(int& l){
+	while(l!= 1 and l!= 0){
+		cout << "\nPROGRAM LANGUAGE\n";
+		cout << "1) Portuguese\n";
+		cout << "0) English\n";
+		cout << "Answer(1 or 0): ";
+		
+		cin >> l;
+		
+		if(l!= 1 and l!= 0){
+			cout << "\nWrong Option, try again\n";
+			}
+		}
+	}
+
+void menu_ptbr(){
     cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 	cout << "|\n|				<CATALOGO DE ANIMES>\n";
 	cout << "|\n|1) Mostrar um Intervalo de animes" << endl;
@@ -1029,6 +1059,20 @@ void menu(){
 	cout << "|5) Encerrar o Programa\n|";
 	cout << endl << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 	cout << "-> Resposta (1 ate 5): ";
+	
+}
+
+void menu_en(){
+    cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+	cout << "|\n|				<CATALOG OF ANIMES>\n";
+	cout << "|\n|1)Show an interval of animes" << endl;
+	cout << "|2) Search with a filter" << endl;
+	cout << "|3) Write of Overwrite datas" << endl;
+	cout << "|4) Remove Datas" << endl;
+	cout << "|5) Finish Program\n|";
+	cout << endl << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+	cout << "-> Answer (1 ate 5): ";
+	
 }
 
 
@@ -1037,6 +1081,7 @@ void trocar(anime &a, anime &b){
 	anime aux = a;
 	a = b;
 	b = aux;
+	
 }
 
 // Partição do Quick Sort Nome
@@ -1051,6 +1096,7 @@ int particaoNome(anime vet[], int menor, int maior){
 		}
 		trocar(vet[i + 1], vet[maior]);
 		return (i + 1);
+		
 }
 
 // Função Quick Sort Nome
@@ -1059,7 +1105,9 @@ void quickSortNome(anime vet[], int menor, int maior){
 		int pivo = particaoNome(vet, menor, maior);
 		quickSortNome(vet, menor, pivo - 1);
 		quickSortNome(vet, pivo + 1, maior);
+		
 		}
+		
 }
 
 // Partição do Quick Sort Lancamentos
@@ -1074,6 +1122,7 @@ int particaoLancamentos(anime vet[], int menor, int maior){
 		}
 		trocar(vet[i + 1], vet[maior]);
 		return (i + 1);
+		
 }
 
 // Função Quick Sort Lancamentos
@@ -1083,6 +1132,7 @@ void quickSortLancamentos(anime vet[], int menor, int maior){
 		quickSortLancamentos(vet, menor, pivo - 1);
 		quickSortLancamentos(vet, pivo + 1, maior);
 		}
+		
 }
 
 // Partição do Quick Sort Genero
@@ -1097,6 +1147,7 @@ int particaoGenero(anime vet[], int menor, int maior){
 		}
 		trocar(vet[i + 1], vet[maior]);
 		return (i + 1);
+		
 }
 
 // Função Quick Sort Genero
@@ -1106,6 +1157,7 @@ void quickSortGenero(anime vet[], int menor, int maior){
 		quickSortGenero(vet, menor, pivo - 1);
 		quickSortGenero(vet, pivo + 1, maior);
 		}
+		
 }
 
 void carregaDados(anime& i, string nomeArquivo, listaDupla& lista, int& tam){
