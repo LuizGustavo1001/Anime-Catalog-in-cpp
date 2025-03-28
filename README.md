@@ -43,4 +43,4 @@
 <em>Possible Future Changes:</em>
 
 ➔ Use multiple filters; ➔Sort the list directly from the list class, without using the assist vector;
-➔ A way to see if the user has writed the correct type of variable (int in int space, string in string space...)
+➔ A way to see if the user has writed the correct type of variable (int in int space, string in string space...) ✔️
