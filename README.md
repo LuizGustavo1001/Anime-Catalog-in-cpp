@@ -1,45 +1,48 @@
-<h1><em>Anime Catalog in C++ using Double Linked List</em></h1>
+<h1><em>Anime Catalog in C++ using Doubly Linked List</em></h1>
 
-<hr>
-➔ User: <a href="https://github.com/LuizGustavo1001/">Luiz Gustavo De Almeida Lopes</a>
-<hr>
-<h2><em>About the Project</em></h2>
+<h2>💡 <em>About the Project</em></h2>
 
-<p>➔ C++ Project based in a <strong>anime catalog</strong> that comes from a <em>.csv file</em> and is stored in a <em>Double Linked List</em> with the:</p> 
+<p>➔ C++ Project based on an <strong>anime catalog</strong> that loads data from a <em>.csv file</em> and stores it in a <em>Doubly Linked List</em> containing the following attributes:</p> 
 <ul>
   <li>Name</li>
   <li>Number of Seasons</li>
   <li>Number of Episodes</li>
   <li>Release Year</li>
-  <li> Finish Date<strong>*</strong></li>
+  <li>Finish Year<strong>*</strong></li>
   <li>Main Genre</li>
   <li>Status<strong>**</strong></li>
 </ul>
-<p>With the possibility of:</p>
 
+
+<p>➔ The program allows you to:</p>
 <ol type="A">
-  <li> Show an Interval or Print the entire Catalog in alphabetic order of name or genre, latest releases order or without filters.</li>
-  <li> Filter the Catalog by: Name, Number of Seasons, Number of Episodes, Release or Finish Year, Genre and Status.</li>
-  <li> Write or Overwrite an anime with the option to save the changes in the list and file***.</li>
-  <li> Remove an anime.</li>
+  <li>Display an especific Interval or Print the entire catalog sorted by <em> name</em>, <em>genre</em>, <em>latest releases</em> or <em>without filters</em>.</li>
+  <li> 
+     Filter the Catalog by: <em>Name</em>, <em>Number of Seasons</em>, <em>Number of Episodes</em>, <em>Release Year</em>, <em>Finish Year</em>, <em>Genre</em> or <em>Status</em>.
+  </li>
+  <li>Add or Overwrite an anime, with the option to save the changes to both list and file<strong>***</strong>.</li>
+  <li>Remove an anime from the catalog.</li>
 </ol>
+
 <strong>
-<p>*If the anime are not finished yet, <em>Finish Year = 0</em>. </p>
-<p>**Status can be <em>“In Progress (Em Progresso)”</em> or <em>“Finished (Finalizado)”</em>.  </p>
-<p>***The inserted data correspond the current state of the anime before the insert day on the catalog. </p>
+  <p>*If the anime is still ongoing, <em>Finish Year = 0</em>.</p>
+  <p>**Status can be <em>“In Progress”</em> or <em>“Finished”</em>.</p>
+  <p>***The inserted data represent the state of the anime at the time of insertion into the catalog.</p>
 </strong>
+
 <hr>
-<h2><strong>Functions</strong></h2>
-<p>➔ <strong><em>Quick Sort</em></strong>: Sort the catalog by Alphabetic order of <em>Name</em> or <em>Gender</em> and <em>Latest Releases</em>. Each one of the Quick sorts have an assist partition to help the sorting process. The datas from the list are transferred to an dynamic allocated vector to assist the process of sorting by the desired filter. Assist function of Quick Sort: “Troca”-> assist the partitions of the vector.</p>
+<h2>📄 <strong>Main Functions</strong></h2>
+<p>➔ <em>Quick Sort</em>: Sort the catalog by <em>Name</em>, <em>Genre</em> or <em>Latest Releases</em>. Each sorting mode uses an auxiliary partition function. The data from the list are temporarily copied to a dynamically allocated vector to assist in the sorting process.</p>
+<p><em>TrocarValores</em> – helps partition the vector during sorting(Quick Sort).</p></p>
 
-<p>➔ <strong><em>Menu</em></strong>: A simple function to show to the user the options that he can execute on the program, initially.</p>
+<p>➔ <strong><em>Menu</em></strong>: Displays the available options to the user at the start of the program.</p>
 
-<p>➔ <strong><em>MensagemErro</em></strong>: When the user digit an unavailable interval of options, this function will be called to show the error message to the user and returns to the program menu.</p>
+<p>➔ <strong><em>MensagemErro</em></strong>: Called when the user select an invalid input range. Displays an default error message.</p>
 
-<p>➔ <strong><em>Main</em></strong>: Should capture the entries that the user writed and call another function to execute what the user wants.</p>
+<p>➔ <strong><em>Main</em></strong>: Capture the inputs and call another function to perform the desired operations.</p>
 <hr>
-<h2><strong>Available Genres At the moment of releasing:</strong></h2>
-<ol type="a">
+<h2>📑Available Genres(At release time):</h2>
+<ul>
   <li>Ação (Action)</li>
   <li>Aventura (Adventure)</li>
   <li>Comédia (Comedy)</li>
@@ -50,14 +53,21 @@
   <li>Slice of Life (Slice of Life)</li>
   <li>Supernatural (Supernatural) </li>
   <li>Terror (Terror)</li>
-</ol>
+</ul>
 <hr>
-<h2><em>Possible Future Changes:</em></h2>
-<ul>
-  <li>Use multiple filters</li>
-  <li>Sort the list directly from the list class, without using the assist vector</li>
-  <li>✔️A way to see if the user has writed the correct type of variable (int in int space, string in string space...) </li>
-  <li> Use an Binary Archive to storage the .csv content</li>
 
-  
+<h2>💻 How to Start</h2>
+<ol type="1">
+    <li>Clone or download the repository. </li>
+    <li>Open <code>CatalogoLista.cpp</code> and compile the program.</li>
+</ol>
+
+<hr>
+<h2>🔦 <em>Possible Future Changes:</em></h2>
+<ul>
+  <li>Enable multiple simultaneous filters.</li>
+  <li>Implement sorting directly within the list class (without the auxiliary vector).</li>
+  <li>✔️ Add input validation to ensure the correct data types (e.g., <em>int</em> fields only accept integers).</li>
+  <li>Use a binary file to store the <em>.csv</em> content for improved performance.</li>
+  <li>Change the entire program leanguage to English</li>
 </ul>

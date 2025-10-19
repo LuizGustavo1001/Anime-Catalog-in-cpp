@@ -12,7 +12,6 @@ struct anime{
 	int anoFinalizacao;
 	string generoPrincipal;    
 	string status;
-	
 };
 
 class noh{
@@ -20,16 +19,16 @@ class noh{
 	private: 
 		noh* proximo;
 		noh* anterior;
-		anime informacoes;
+		anime categorias;
 
 	public:
 		noh(anime i);
 };
 
 noh::noh(anime i){
-	proximo = NULL;
-	anterior = NULL;
-	informacoes = i; 
+	proximo 	= NULL;
+	anterior 	= NULL;
+	categorias 	= i; 
 
 }
 
@@ -74,70 +73,75 @@ class listaDupla{
 		
 };
 
+// construtor
 listaDupla::listaDupla(){
-	primeiro = NULL;
-	ultimo = NULL;
-	tamanhoLista =0;
+	primeiro 		= NULL;
+	ultimo 			= NULL;
+	tamanhoLista 	= 0;
 
 }
 
+// destrutor
 listaDupla::~listaDupla(){
 	while(! listaVazia()){
 		removeAnimeInicio();
 	}
-	tamanhoLista=0;
+	tamanhoLista = 0;
 	
 }
 
 bool listaDupla::listaVazia(){
-	return (tamanhoLista==0);
+	return (tamanhoLista == 0);
 	
 }
 
-
+// insere anime em uma lista vazia
 void listaDupla::insereAnimeVazia(anime info){
-	noh* novoNoh = new noh(info);
+	noh* novoAnime = new noh(info);
 	
-	primeiro = novoNoh;
-	ultimo = novoNoh;
+	primeiro = novoAnime;
+	ultimo = novoAnime;
 	tamanhoLista++;
 	
 }
 
+// insere anime no início da lista
 void listaDupla::insereAnimeInicio(anime info){
 	if(listaVazia()){
 		insereAnimeVazia(info);
 	}else{
-		noh* novoNoh = new noh(info);
-		novoNoh -> proximo = primeiro;
-		primeiro -> anterior =novoNoh;
-		primeiro = novoNoh;
+		noh* novoAnime = new noh(info);
+		novoAnime->proximo = primeiro;
+		primeiro->anterior = novoAnime;
+		primeiro = novoAnime;
 		tamanhoLista++;
 	}
 	
 }
 
+// insere anime no fim da lista
 void listaDupla::insereAnimeFim(anime info){
 	if(listaVazia()){
 		insereAnimeVazia(info);
 	}else{
-		noh* novoNoh = new noh(info);
+		noh* novoAnime = new noh(info);
 		
-		novoNoh -> anterior = ultimo;
-		ultimo -> proximo = novoNoh;
-		ultimo = novoNoh;
+		novoAnime->anterior = ultimo;
+		ultimo->proximo = novoAnime;
+		ultimo = novoAnime;
 		
 		tamanhoLista++;
 	}
 }
 
+// sobrescreve um anime na posição desejada
 void listaDupla::sobrescreveAnimePosicaoDesejada(int posicaoDesejada, anime dados){
-	noh* aux = primeiro;
+	noh* anime = primeiro;
 	
-	while(aux->informacoes.numeracao != posicaoDesejada){
-		aux = aux -> proximo;
+	while(anime->categorias.numeracao != posicaoDesejada){
+		anime = anime->proximo;
 	}
-	aux->informacoes = dados;
+	anime->categorias = dados;
 	
 }
 
@@ -145,108 +149,114 @@ void listaDupla::removeAnimeInicio(){
 	if(listaVazia()){
 		cout << "Erro, impossivel remover em uma lista vazia\n";
 	}else{
-	if(tamanhoLista==1){
-		primeiro = nullptr;
-		ultimo = nullptr;
-		tamanhoLista=0;
+	if(tamanhoLista == 1){
+		// existe apenas 1 anime na lista -> deixar lista vazia
+		primeiro 		= nullptr;
+		ultimo 			= nullptr;
+		tamanhoLista	= 0;
 
 	}else{
-		noh* aux= primeiro;
+		noh* anime = primeiro;
 		primeiro = primeiro->proximo;
 		primeiro->anterior = nullptr;
 
-		delete aux;
+		delete anime;
 		tamanhoLista--;
 
 		}
 	}
 }
 
+// remove anime no fim da lista
 void listaDupla::removeAnimeFim(){
 	if(listaVazia()){
 		cout << "Erro, impossivel remover em uma lista vazia\n";
 	}else{
-		if(tamanhoLista==1){											//removendo na primeira posicao
-			primeiro=nullptr;
-			ultimo = nullptr;
-			tamanhoLista=0;
+		if(tamanhoLista==1){
+			// existe apenas 1 anime na lista -> deixar lista vazia
+			primeiro		= nullptr;
+			ultimo 			= nullptr;
+			tamanhoLista 	= 0;
 
 		}else{
-			noh* aux = ultimo;
-			ultimo = ultimo -> anterior;
-			ultimo -> proximo = nullptr;
+			noh* anime = ultimo;
+			ultimo = ultimo->anterior;
+			ultimo->proximo = nullptr;
 
-			delete aux;
+			delete anime;
 			tamanhoLista--;
 		}
 	}
 }
 
+// remove anime em uma posição desejada
 void listaDupla::removeAnimePosicaoDesejada(int posicaoDesejada){
 	if(listaVazia()){
 		cout << "Erro: Catalogo vazio\nRetornando ao comeco do codigo\n";
 	}else{
-		noh* aux = primeiro;
-		int posAux=0;
+		noh* anime = primeiro;
+		int posicaoAnime = 0;
 
-		while((posAux != posicaoDesejada)and(aux != nullptr)){
-			aux = aux -> proximo;
-			posAux++;
+		// encontrar a posição do anime selecionado
+		while((posicaoAnime != posicaoDesejada) and (anime != nullptr)){
+			anime = anime->proximo;
+			posicaoAnime++;
 		}
-		if(aux != nullptr){
+
+		// remover anime, caso posição seja válida
+		if(anime != nullptr){
 			if(posicaoDesejada == 0){
 				removeAnimeInicio();
-			}else if(posicaoDesejada== tamanhoLista){
+			}else if(posicaoDesejada == tamanhoLista){
 				removeAnimeFim();
 			}else{
-				aux= primeiro;
-				posAux=0;
-				while(posAux != posicaoDesejada){
-					aux->anterior=aux;
-					aux= aux -> proximo;
-					posAux++;
+				anime = primeiro;
+				posicaoAnime = 0;
+				while(posicaoAnime != posicaoDesejada){
+					anime->anterior = anime;
+					anime = anime->proximo;
+					posicaoAnime++;
 				}
-				aux->anterior->proximo=aux->proximo;
-				ultimo->proximo=NULL;
-				delete aux;
+				anime->anterior->proximo = anime->proximo;
+				ultimo->proximo = NULL;
+
+				delete anime;
 				tamanhoLista--;
-				
 			}
 		}
 	}
 }
-	
-void listaDupla::removeAnime(int opcao,int numeracaoDesejada, string nomeDesejado){
-	noh* aux = primeiro;
-	int posAux = 0;
+
+// função para remover anime
+void listaDupla::removeAnime(int opcao, int numeracaoDesejada, string nomeDesejado){
+	noh* anime = primeiro;
+	int posicaoAnime = 0;
 	switch(opcao){
 		case 1:{ // remove por nome
-			
-			while(aux != nullptr and aux->informacoes.nomeAnime != nomeDesejado){
-				aux = aux -> proximo;
-				posAux++;
+			while(anime != nullptr and anime->categorias.nomeAnime != nomeDesejado){
+				anime = anime->proximo;
+				posicaoAnime++;
 			}
-			if(aux == nullptr){
+			if(anime == nullptr){
 				cout << "Erro: anime com nome desejado nao encontrado no catalogo\nRetornando ao comeco do codigo\n";
 			}else{
-				imprimeAnime(aux);
-				
-				int respostaSalvarRemocaoNome;
-				
+				imprimeAnime(anime);
+
 				cout << "Deseja mesmo remover?\n";
 				cout << "1)Sim\n2)Nao\n";
 				cout << "Resposta(1 ou 2): ";
-				
+
+				int respostaSalvarRemocaoNome;
 				cin >> respostaSalvarRemocaoNome;
 				
 				switch(respostaSalvarRemocaoNome){
-					case 1:{// salvar na lista e .csv
-						removeAnimePosicaoDesejada(posAux);
+					case 1:{ // salvar na lista e .csv
+						removeAnimePosicaoDesejada(posicaoAnime);
 						cout << "\nAnime removido com sucesso do catalogo\nRetornando ao comeco do codigo\n";
 						salvarArquivo();
 						break;
 					}
-					case 2:{//nao salvar
+					case 2:{ //nao salvar
 						cout << "Anime acima nao removido do catalogo\nRetornando ao comeco do codigo\n";
 						break;
 					}
@@ -258,28 +268,26 @@ void listaDupla::removeAnime(int opcao,int numeracaoDesejada, string nomeDesejad
 			}
 			break;
 		}
-		case 2:{
-			
-			while(aux->informacoes.numeracao != numeracaoDesejada){
-				aux = aux -> proximo;
-				posAux++;
+		case 2:{ // remove por numeração do anime
+			while(anime->categorias.numeracao != numeracaoDesejada){
+				anime = anime->proximo;
+				posicaoAnime++;
 			}
-			if(aux == nullptr){
+			if(anime == nullptr){
 				cout << "Erro: anime com nome desejado nao encontrado no catalogo\nRetornando ao comeco do codigo\n";
 			}else{
-				imprimeAnime(aux);
+				imprimeAnime(anime);
 					
-				int respostaSalvarRemocaoNome;
-				
 				cout << "Deseja mesmo remover?\n";
 				cout << "1)Sim\n2)Nao\n";
 				cout << "Resposta(1 ou 2): ";
-				
+
+				int respostaSalvarRemocaoNome;
 				cin >> respostaSalvarRemocaoNome;
 				
 				switch(respostaSalvarRemocaoNome){
 					case 1:{// salvar na lista e .csv
-						removeAnimePosicaoDesejada(posAux);
+						removeAnimePosicaoDesejada(posicaoAnime);
 						cout << "\nAnime Removido com sucesso do catalogo\nRetornando ao comeco do codigo\n";
 						salvarArquivo();
 						break;
@@ -294,117 +302,123 @@ void listaDupla::removeAnime(int opcao,int numeracaoDesejada, string nomeDesejad
 					}
 				}
 			}
-			
 			break;
 		}
 	}
 }
 
 void listaDupla::imprimeCatalogo(){
-	noh* aux= primeiro;
-	while(aux != NULL){
-		imprimeAnime(aux);
-		aux = aux -> proximo;
+	noh* anime = primeiro;
+	while(anime != NULL){
+		imprimeAnime(anime);
+		anime = anime->proximo;
 	}
 }
 
-void listaDupla::imprimeAnime(noh* aux){
-	cout << "[ ";
-	cout << aux->informacoes.numeracao << "-> ";
-	cout << "Nome: "<<aux->informacoes.nomeAnime << " / ";
-	cout << "Temporadas: " << aux->informacoes.numTemporadas << " / ";
-	cout << "Episodios: " << aux->informacoes.numEpisodios << " / ";
-	cout << "Lancamento: " << aux->informacoes.anoLancamento << " / ";
-	cout << "Finalizacao: " << aux->informacoes.anoFinalizacao << " / ";
-	cout << "GeneroPrincipal: " << aux->informacoes.generoPrincipal << " / ";
-	cout << "Status: " << aux->informacoes.status << " ]"<< endl;
-	cout << endl;
+void listaDupla::imprimeAnime(noh* anime){
+	cout << "\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+	cout << anime->categorias.numeracao << " - " << anime->categorias.nomeAnime << endl;
+
+	cout << "- Temporadas: " 		<< anime->categorias.numTemporadas		<< endl;
+	cout << "- Episodios: "			<< anime->categorias.numEpisodios 		<< endl;
+	cout << "- Lancamento: " 		<< anime->categorias.anoLancamento 		<< endl;
+	cout << "- Finalizacao: " 		<< anime->categorias.anoFinalizacao 	<< endl;
+	cout << "- GeneroPrincipal: " 	<< anime->categorias.generoPrincipal 	<< endl;
+	cout << "- Status: " 			<< anime->categorias.status 			<< endl;
+	cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 	
 }
 
 void listaDupla::imprimeIntervaloCatalogo(int inicio, int fim){
 	
-	noh*auxInicio = primeiro;
-	int posAuxInicio=0;
+	noh*animeInicio = primeiro;
+	int posicaoAnimeInicio = 0;
 		
-	noh* auxFim = primeiro;
-	int posAuxFim=0;
+	noh* animeFim = primeiro;
+	int posicaoAnimeFim = 0;
 	
-	while(posAuxInicio != inicio){
-		auxInicio = auxInicio -> proximo;
-		posAuxInicio++;
+	// encontrar o anime do inicio do intervalo
+	while(posicaoAnimeInicio != inicio){
+		animeInicio = animeInicio->proximo;
+		posicaoAnimeInicio++;
 	}
 	
-	while(posAuxFim != fim){
-		auxFim = auxFim -> proximo;
-		posAuxFim++;
+	// encontrar o anime do fim do intervalo
+	while(posicaoAnimeFim != fim){
+		animeFim = animeFim->proximo;
+		posicaoAnimeFim++;
 	}
 	
-	while(auxInicio != auxFim){
-		imprimeAnime(auxInicio);
-		auxInicio = auxInicio -> proximo;
+	// imprime animes dentro do intervalo
+	while(animeInicio != animeFim){
+		imprimeAnime(animeInicio);
+		animeInicio = animeInicio->proximo;
 	}
 }
 
+// procura e imprime anime pelo nome selecionado
 void listaDupla::procuraAnimeNome(string nomeDesejado){
-	noh* aux = primeiro;
+	noh* anime = primeiro;
 	
-	while(aux != nullptr and aux->informacoes.nomeAnime != nomeDesejado){
-		aux = aux->proximo;
+	// procura anime com o nome selecioado
+	while(anime != nullptr and anime->categorias.nomeAnime != nomeDesejado){
+		anime = anime->proximo;
 	}
-	if(aux ==nullptr){
+	if(anime == nullptr){
 		cout << "\nErro: anime nao se encontra na lista, tente digitar de outra forma\n";
 	}else{
-		cout << "\nAnime encontrado na posicao " << aux->informacoes.numeracao << " do catalogo\n";
-		imprimeAnime(aux); 
+		// imprime o anime
+		cout << "\nAnime encontrado na posicao " << anime->categorias.numeracao << " do catalogo\n";
+		imprimeAnime(anime); 
 	}
 }
 
-void listaDupla::procuraAnimeStatus(int sD){
+// procura e imprime anime pelo status selecionado
+void listaDupla::procuraAnimeStatus(int statusSelecionado){
 	string statusDesejado;
-	if(sD == 1){														// em andamento
+	if(statusSelecionado == 1){
 		statusDesejado = "Em Andamento";
 	}else{
 		statusDesejado = "Finalizado";
 	}
 			
-	noh* aux = primeiro;
-	
-	while(aux != nullptr){
-		if(aux->informacoes.status == statusDesejado){
-			imprimeAnime(aux);
+	noh* anime = primeiro;
+	while(anime != nullptr){
+		if(anime->categorias.status == statusDesejado){
+			imprimeAnime(anime);
 		}
-		aux = aux -> proximo;
+		anime = anime->proximo;
 	}
 }
-	
+
+// procura e imprime anime pelo ano selecionado
 void listaDupla::procuraAnimeAno(int opcao,int anoDesejado){
-	noh* aux = primeiro;
-	int qntd=0;
+	noh* anime = primeiro;
+	int quantidade = 0;
 	switch(opcao){
-		case 1:{														// ano de lancamento
-			while(aux != nullptr){
-				if(aux->informacoes.anoLancamento == anoDesejado){
-					imprimeAnime(aux);
-					qntd++;
+		case 1:{ // ano de lancamento
+			while(anime != nullptr){
+				if(anime->categorias.anoLancamento == anoDesejado){
+					imprimeAnime(anime);
+					quantidade++;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
-			if(qntd == 0){
+			if(quantidade == 0){
 				cout << "\nErro: Nenhum anime com o ano de lancamento desejado esta cadastrado no catalogo";
 				cout << "\nRetornando ao comeco do codigo\n";
 			}
 			break;
 		}
-		case 2:{//ano de finalizacao
-			while(aux != nullptr){
-				if(aux->informacoes.anoFinalizacao == anoDesejado){
-					imprimeAnime(aux);
-					qntd++;
+		case 2:{ // ano de finalizacao
+			while(anime != nullptr){
+				if(anime->categorias.anoFinalizacao == anoDesejado){
+					imprimeAnime(anime);
+					quantidade++;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
-			if(qntd == 0){
+			if(quantidade == 0){
 				cout << "\nErro: Nenhum anime com o ano de lancamento desejado esta cadastrado no catalogo";
 				cout << "\nRetornando ao comeco do codigo\n";
 			}
@@ -416,21 +430,20 @@ void listaDupla::procuraAnimeAno(int opcao,int anoDesejado){
 			break;
 		}
 	}
-	
 }
 
+// procura e imprime anime pelo número de temporadas selecionado
 void listaDupla::procuraAnimePorNumTemp(int numTempDesejado){
-	noh* aux = primeiro;
+	noh* anime = primeiro;
 	int quantidade = 0;
 	
-	while(aux != nullptr){
-		if(aux->informacoes.numTemporadas == numTempDesejado){
-			imprimeAnime(aux);
+	while(anime != nullptr){
+		if(anime->categorias.numTemporadas == numTempDesejado){
+			imprimeAnime(anime);
 			quantidade++;
 		}else{
-			aux = aux -> proximo;
+			anime = anime->proximo;
 		}
-		
 	}
 	if(quantidade == 0){
 		cout << "\nErro: Nenhum anime com o Numero de Temporadas desejado esta cadastrado no catalogo";
@@ -438,16 +451,17 @@ void listaDupla::procuraAnimePorNumTemp(int numTempDesejado){
 	}
 }
 
+// procura e imprime anime pelo gênero selecionado
 void listaDupla::imprimeCatalogoPorGenero(string generoDesejado){
-	noh* aux = primeiro;
+	noh* anime = primeiro;
 	int quantidade = 0;
 	
-	while(aux != nullptr){
-		if(aux->informacoes.generoPrincipal == generoDesejado){
-			imprimeAnime(aux);
+	while(anime != nullptr){
+		if(anime->categorias.generoPrincipal == generoDesejado){
+			imprimeAnime(anime);
 			quantidade++;
 		}
-		aux = aux -> proximo;
+		anime = anime->proximo;
 	}
 	if(quantidade == 0){
 		cout << "\nErro: nenhum anime com o genero desejado foi encontrado na tabela, tente escrever de uma outra forma ou procurar outro genero\n";
@@ -455,47 +469,49 @@ void listaDupla::imprimeCatalogoPorGenero(string generoDesejado){
 	
 }
 
-void listaDupla::preencherVetor( anime catalogo[]){
+// preenche atributos de um objeto
+void listaDupla::preencherVetor(anime catalogo[]){
 	noh* temp = primeiro;
 	for(int i=0; i<tamanhoLista ; i++){
-		catalogo[i] = temp->informacoes;
+		catalogo[i] = temp->categorias;
 		temp = temp->proximo;
 	}
 	
 }
 
+// retorna o menor valor de uma categoria de um anime
 int listaDupla::menores(int opcao){
-	noh* aux= primeiro;
+	noh* anime = primeiro;
 	int menor;
-	
+
 	switch(opcao){
-		case 1:{														//ano lancamento
-			menor = aux->informacoes.anoLancamento;
-			while(aux != nullptr){
-				if(aux->informacoes.anoLancamento < menor){
-					menor = aux->informacoes.anoLancamento;
+		case 1:{ // ano lancamento
+			menor = anime->categorias.anoLancamento;
+			while(anime != nullptr){
+				if(anime->categorias.anoLancamento < menor){
+					menor = anime->categorias.anoLancamento;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
-		case 2:{														//ano finalizacao
-			menor = aux -> informacoes.anoFinalizacao;
-			while(aux != nullptr){
-				if((aux->informacoes.anoFinalizacao < menor) and (aux->informacoes.anoFinalizacao != 0)){
-					menor = aux->informacoes.anoFinalizacao;
+		case 2:{ // ano finalizacao
+			menor = anime->categorias.anoFinalizacao;
+			while(anime != nullptr){
+				if((anime->categorias.anoFinalizacao < menor) and (anime->categorias.anoFinalizacao != 0)){
+					menor = anime->categorias.anoFinalizacao;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
-		case 3:{ 														// numero de temporadas
-			menor = aux->informacoes.numTemporadas;
-			while(aux != nullptr){
-				if(aux->informacoes.numTemporadas < menor){
-					menor = aux->informacoes.numTemporadas;
+		case 3:{ // número temporadas
+			menor = anime->categorias.numTemporadas;
+			while(anime != nullptr){
+				if(anime->categorias.numTemporadas < menor){
+					menor = anime->categorias.numTemporadas;
 				}
-				aux= aux->proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
@@ -503,541 +519,347 @@ int listaDupla::menores(int opcao){
 		return menor;
 }
 
+// retorna o maior valor de uma categoria de um anime
 int listaDupla::maiores(int opcao){
-	noh* aux;
+	noh* anime;
 	int maior;
 	
 	switch(opcao){
-		case 1:{														//ano lancamento
-			aux = primeiro;
-			maior = aux->informacoes.anoLancamento;
-			while(aux != nullptr){
-				if(aux->informacoes.anoLancamento > maior){
-					maior = aux->informacoes.anoLancamento;
+		case 1:{ // ano lançamento
+			anime = primeiro;
+			maior = anime->categorias.anoLancamento;
+			while(anime != nullptr){
+				if(anime->categorias.anoLancamento > maior){
+					maior = anime->categorias.anoLancamento;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
-		case 2:{														//ano finalizacao
-			aux = primeiro;
-			maior = aux -> informacoes.anoFinalizacao;
-			while(aux != nullptr){
-				if(aux->informacoes.anoFinalizacao > maior){
-					maior = aux -> informacoes.anoFinalizacao;
+		case 2:{ // ano finalização
+			anime = primeiro;
+			maior = anime->categorias.anoFinalizacao;
+			while(anime != nullptr){
+				if(anime->categorias.anoFinalizacao > maior){
+					maior = anime->categorias.anoFinalizacao;
 				}
-				aux = aux -> proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
-		case 3:{ 														// numero de temporadas
-			aux = primeiro;
-			maior = aux->informacoes.numTemporadas;
-			while(aux != nullptr){
-				if(aux->informacoes.numTemporadas > maior){
-					maior = aux->informacoes.numTemporadas;
+		case 3:{ // número temporadas
+			anime = primeiro;
+			maior = anime->categorias.numTemporadas;
+			while(anime != nullptr){
+				if(anime->categorias.numTemporadas > maior){
+					maior = anime->categorias.numTemporadas;
 				}
-				aux= aux->proximo;
+				anime = anime->proximo;
 			}
 			break;
 		}
 	}
 		return maior;
 }
-	
+
+// salva alterações na lista no arquivo .csv	
 void listaDupla::salvarArquivo(){
-	noh* aux = primeiro;
-	int contador=1;
+	noh* anime = primeiro;
+	int posicao = 1;
 	ofstream saida ("Catalogo.csv");
 	
 	saida << "# Numeracao Nome Número_Temporadas Número_Episódios Ano_Lançamento Ano_Finalização Gênero_Principal Status" << endl;
 	saida << "OBS:(anoFinalizacao=0 sera quando o anime ainda nao estiver finalizado)" << endl;
 	
-	while(aux != nullptr){
-		saida << contador << ";";
-		saida << '"' << aux->informacoes.nomeAnime << '"' << ";";
-		saida << aux->informacoes.numTemporadas << ";";
-		saida << aux->informacoes.numEpisodios << ";";
-		saida << aux->informacoes.anoLancamento << ";";
-		saida << aux->informacoes.anoFinalizacao << ";";
-		saida << '"' << aux->informacoes.generoPrincipal << '"' << ";";
-		saida << '"' << aux->informacoes.status << '"';
+	while(anime != nullptr){
+		saida << posicao << ";";
+		saida << '"' << anime->categorias.nomeAnime << '"' << ";";
+
+		saida << anime->categorias.numTemporadas << ";";
+		saida << anime->categorias.numEpisodios << ";";
+		saida << anime->categorias.anoLancamento << ";";
+		saida << anime->categorias.anoFinalizacao << ";";
+
+		saida << '"' << anime->categorias.generoPrincipal << '"' << ";";
+		saida << '"' << anime->categorias.status << '"';
+
 		saida << endl;
-		aux = aux -> proximo;
-		contador++;
+		anime = anime->proximo;
+		posicao++;
 	}
 }
-																		// Função para trocar dois elementos
-void trocar(anime &a, anime &b);
 
-																		// Partição do Quick Sort Nome
-int particaoNome(anime vet[], int menor, int maior);
-
-																		// Função Quick Sort Nome
-void quickSortNome(anime vet[], int menor, int maior);
-
-int particaoLancamentos(anime vet[], int menor, int maior);
-
-																		// Função Quick Sort Nome
-void quickSortLancamentos(anime vet[], int menor, int maior);
-
-int particaoGenero(anime vet[], int menor, int maior);
-
-																		// Função Quick Sort Nome
-void quickSortGenero(anime vet[], int menor, int maior);
-
+void trocarValores(anime &elemento1, anime &elemento2);
+int quickSortPartição(anime animes[], int menor, int maior, string objeto);
+void quickSort(anime animes[], int menor, int maior, string categoria);
 void mensagemErro();
-
 void menu_ptbr();
+void erro_Variavel(int tipoVariavel);
+void carregaDados(anime& i, string arquivoCSV, listaDupla& lista, int& tam);
 
-void erro_Variavel(int t);
-
-void carregaDados(anime& i, string nomeArquivo, listaDupla& lista, int& tam);
 
 int main(){
-	
-listaDupla l1;
-anime info;
+		
+	listaDupla listaPrincipal;
+	anime categorias;
 
-int tamanho = 0;
-string nomeArquivo = "Catalogo.csv";
+	int tamanho = 0;
+	string arquivoCSV = "Catalogo.csv";
 
-carregaDados(info, nomeArquivo, l1, tamanho);
+	carregaDados(categorias, arquivoCSV, listaPrincipal, tamanho);
 
-int resposta;
+	int resposta;
 
-do{
-	menu_ptbr();
-	
-	cin >> resposta;
-	if(cin.fail()){
-		erro_Variavel(1);
-	}else{
-		switch(resposta){
-			case 1:{												//intervalo
-				int respostaIntervalo;
+	do{
+		menu_ptbr();
+		
+		cin >> resposta;
+		if(cin.fail()){
+			erro_Variavel(1);
+		}else{
+			switch(resposta){
+				case 1:{ // intervalo
+					cout << "\n1)Alfabetica\n2)Ultimos lancamentos\n3)Genero\n4)Sem Filtro\n";
+					cout << "Resposta(1, 2, 3 ou 4): ";
 
-				cout << "\n1)Alfabetica\n2)Ultimos lancamentos\n3)Genero\n4)Sem Filtro\n";
-				cout << "Resposta(1, 2, 3 ou 4): ";
-
-				cin >> respostaIntervalo;
-				if(cin.fail()){
-					erro_Variavel(1);
-				}else{
-					if(respostaIntervalo <= 0 or respostaIntervalo > 4){
-						mensagemErro();
+					int respostaIntervalo;
+					cin >> respostaIntervalo;
+					if(cin.fail()){
+						erro_Variavel(1);
 					}else{
-						listaDupla listaAux;
-						anime *vetorOrdenacao = new anime[tamanho];
-				
-						l1.preencherVetor(vetorOrdenacao);
+						if(respostaIntervalo <= 0 or respostaIntervalo > 4){
+							mensagemErro();
+						}else{
+							listaDupla listaAux;
+							anime *vetorOrdenacao = new anime[tamanho];
+					
+							listaPrincipal.preencherVetor(vetorOrdenacao);
 
-						switch(respostaIntervalo){
-							case 1:{														 // Alfabetica
-								quickSortNome(vetorOrdenacao, 0 , tamanho-2);
-								for (int i = 0; i < tamanho-1; i++){
-									listaAux.insereAnimeFim(vetorOrdenacao[i]);
+							switch(respostaIntervalo){
+								case 1:{ // alfabética
+									quickSort(vetorOrdenacao, 0 , tamanho-2, "nome");
+									for (int i = 0; i < tamanho-1; i++){
+										listaAux.insereAnimeFim(vetorOrdenacao[i]);
+									}
+									cout << "\nCatalogo ordenado por ordem alfabetica\n";
+
+									break;
 								}
-								cout << "\nCatalogo ordenado por ordem alfabetica\n";
+								case 2:{ // últimos lancamentos
+									quickSort(vetorOrdenacao, 0, tamanho-2, "lancamento");
+									for(int i=0; i< tamanho-1 ; i++){
+										listaAux.insereAnimeFim(vetorOrdenacao[i]);
+									}
+									cout << "\nCatalogo ordenado por ultimos lancamentos\n";
 
-								break;
-							}
-							case 2:{														 // ultimos lancamentos
-								quickSortLancamentos(vetorOrdenacao, 0, tamanho-2);
-								for(int i=0; i< tamanho-1 ; i++){
-									listaAux.insereAnimeFim(vetorOrdenacao[i]);
+									break;
 								}
-								cout << "\nCatalogo ordenado por ultimos lancamentos\n";
+								case 3:{ // gênero
+									quickSort(vetorOrdenacao, 0, tamanho-2, "genero");
+									for(int i=0; i<tamanho-1; i++){
+										listaAux.insereAnimeFim(vetorOrdenacao[i]);
+									}
+									cout << "\nCatalogo ordenado por genero\n";
 
-								break;
-							}
-							case 3:{														 // genero
-								quickSortGenero(vetorOrdenacao, 0, tamanho-2);
-								for(int i=0; i<tamanho-1; i++){
-									listaAux.insereAnimeFim(vetorOrdenacao[i]);
+									break;
 								}
-								cout << "\nCatalogo ordenado por genero\n";
-
-								break;
-							}
-							case 4:{ 													// Apenas imprimir
-								int respostaIntervaloSemFiltro;
-								cout << "\nCatalogo nao ordenado por escolha do usuario\n";
-								cout << "1)Todo o catalogo sem filtro\n2)Intervalo do catalogo sem filtro\n";
-								cout << "Resposta(1 ou 2): ";
+								case 4:{ // Apenas imprimir
+									int respostaIntervaloSemFiltro;
+									cout << "\nCatalogo nao ordenado por escolha do usuario\n";
+									cout << "1)Todo o catalogo sem filtro\n2)Intervalo do catalogo sem filtro\n";
+									cout << "Resposta(1 ou 2): ";
+									
+									cin >> respostaIntervaloSemFiltro;
+									if(cin.fail()){
+										erro_Variavel(1);
+									}else{
+										switch(respostaIntervaloSemFiltro){
+											case 1:{ // todo o catálogo
+												listaPrincipal.imprimeCatalogo();
+												break;
+											}
+											case 2:{ // apenas intervalo
+												int comecoIntervalo;
+												int fimIntervalo;
+												
+												cout << "Intervalo(Minimo = 1 e Maximo = " << tamanho-1 << ")\n";
 								
-								cin >> respostaIntervaloSemFiltro;
-								if(cin.fail()){
-									erro_Variavel(1);
-								}else{
-									switch(respostaIntervaloSemFiltro){
-										case 1:{										// todo o catalogo
-											l1.imprimeCatalogo();
-											break;
-										}
-										case 2:{										//intervalo
-											int c;	//comeco do intervalo
-											int f;	//fim do intervalo
-											
-											cout << "Intervalo(Minimo = 1 e Maximo = " << tamanho-1 << ")\n";
-							
-											cout << "Inicio: ";
-											cin >> c;
-											if(cin.fail()){
-												erro_Variavel(1);
-											}else{
-												cout << "Fim: ";
-												cin >> f;
+												cout << "Inicio: ";
+												cin >> comecoIntervalo;
 												if(cin.fail()){
 													erro_Variavel(1);
 												}else{
-													if((c < 0) or (c >= tamanho) or (f < c) or (f >= tamanho)){
-														mensagemErro();
+													cout << "Fim: ";
+													cin >> fimIntervalo;
+													if(cin.fail()){
+														erro_Variavel(1);
 													}else{
-														l1.imprimeIntervaloCatalogo(c-1, f);
+														if((comecoIntervalo < 0) or (comecoIntervalo >= tamanho) or (fimIntervalo < comecoIntervalo) or (fimIntervalo >= tamanho)){
+															mensagemErro();
+														}else{
+															listaPrincipal.imprimeIntervaloCatalogo(comecoIntervalo-1, fimIntervalo);
+														}
 													}
 												}
+												break;
+											}
+											default:{
+												mensagemErro();
+												
+												break;
+											}
+										}
+									}
+									break;
+								}
+							delete[] vetorOrdenacao;
+							}	
+							if(respostaIntervalo != 4){ 
+								// será utilizada uma lista auxiliar para a impressão
+								// lista auxiliar -> facilitar a filtragem do catálogo
+								cout << "\n1)Imprimir todo o catalogo \n2)Imprimir um intervalo determinado\n";
+								cout << "Resposta: ";
+
+								int respostaImprimir;
+								cin >> respostaImprimir;
+								if(cin.fail()){
+									erro_Variavel(1);
+								}else{
+									switch(respostaImprimir){
+										case 1:{ // imprimir todo catálogo
+											listaAux.imprimeCatalogo();
+											break;
+										}
+										case 2:{ // imprime intervalo catálogo
+											int comecoIntervalo;
+											int fimIntervalo;
+											cout << "Intervalo(Minimo = 1 e Maximo = " << tamanho-1 << ")\n";
+							
+											cout << "Inicio: ";
+											cin >> comecoIntervalo;
+							
+											cout << "Fim: ";
+											cin >> fimIntervalo;
+							
+											if((comecoIntervalo < 0) or (comecoIntervalo >= tamanho) or (fimIntervalo < comecoIntervalo) or (fimIntervalo >= tamanho)){
+												mensagemErro();
+											}else if(comecoIntervalo == fimIntervalo){							//imprimir somente 1 posicao
+												listaAux.imprimeIntervaloCatalogo(comecoIntervalo-1, fimIntervalo);
+											}else{
+												listaAux.imprimeIntervaloCatalogo(comecoIntervalo-1,fimIntervalo);
 											}
 											break;
 										}
 										default:{
 											mensagemErro();
-											
 											break;
 										}
 									}
 								}
-								break;
-							}
-						delete[] vetorOrdenacao;
-						}	
-						if(respostaIntervalo != 4){ 
-													// se for diferente de 4, será utilizada uma lista auxiliar para a impressão
-													// lista auxiliar -> facilitar a filtragem do catálogo
-							int respostaImprimir;
-			
-							cout << "\n1)Imprimir todo o catalogo\n2)Imprimir um intervalo determinado\n";
-							cout << "Resposta: ";
-			
-							cin >> respostaImprimir;
-							if(cin.fail()){
-								erro_Variavel(1);
-							}else{
-								switch(respostaImprimir){
-									case 1:{
-										listaAux.imprimeCatalogo();
-										break;
-									}
-									case 2:{
-										int comeco;
-										int fim;
-										cout << "Intervalo(Minimo = 1 e Maximo = " << tamanho-1 << ")\n";
-						
-										cout << "Inicio: ";
-										cin >> comeco;
-						
-										cout << "Fim: ";
-										cin >> fim;
-						
-										if((comeco < 0) or (comeco >= tamanho) or (fim < comeco) or (fim >= tamanho)){
-											mensagemErro();
-										}else if(comeco == fim){							//imprimir somente 1 posicao
-											listaAux.imprimeIntervaloCatalogo(comeco-1, fim);
-										}else{
-											listaAux.imprimeIntervaloCatalogo(comeco-1,fim);
-										}
-										break;
-									}
-									default:{
-										mensagemErro();
-										break;
-									}
-								}
 							}
 						}
-					}
-				}	
-				break;
-			}
-			case 2:{												 // filtrar
-				int respostaFiltrar;
-				
-				cout << "\n1)Nome\n2)Ano de Lancamento\n3)Ano de Finalizacao\n4)Genero\n5)Numero de Temporadas\n6)Status\n";
-				cout << "Resposta(1, 2, 3, 4, 5 ou 6 ): "; 
-				
-				cin >> respostaFiltrar;
-				
-				switch(respostaFiltrar){
-					case 1:{										 //nome
-						cout << "\nNome: ";
-						cin.ignore();
-						getline(cin, info.nomeAnime);
-						
-						l1.procuraAnimeNome(info.nomeAnime);
-						
-						break;
-						}
-					case 2:{										//ano de lancamento
-						cout << "\nAno de lancamento\n";
-						int menorAnoLancamento = l1.menores(1);
-						int maiorAnoLancamento = l1.maiores(1);
-						
-						cout << "Minimo = " << menorAnoLancamento << " Maior = " << maiorAnoLancamento << endl;
-						cout << "Resposta: ";
-						
-						cin >> info.anoLancamento;
-						if(cin.fail()){
-							erro_Variavel(1);
-						}else{
-							if((info.anoLancamento <= maiorAnoLancamento)and (info.anoLancamento > 0)){
-								l1.procuraAnimeAno(1,info.anoLancamento);
-							}else{
-								mensagemErro();
-							}
-						}
-						break;
-					}
-					case 3:{										//ano de finalizacao
-						cout << "\nAno de finalizacao:\n";
-						int menorAnoFinalizacao = l1.menores(2);
-						int maiorAnoFinalizacao = l1.maiores(2);
-						cout << "(Minimo = (0 se em andamento) ou " << menorAnoFinalizacao << " | Maior = " << maiorAnoFinalizacao << ")"<< endl;
-						cout << "Resposta: ";
-						
-						cin >> info.anoFinalizacao;
-						if(cin.fail()){
-							erro_Variavel(1);
-						}else{
-							if((info.anoFinalizacao <= maiorAnoFinalizacao) and(info.anoFinalizacao >=0)){
-								l1.procuraAnimeAno(2,info.anoFinalizacao);
-							}else{
-								mensagemErro();
-							}
-						}
-						break;
-					}
-					case 4:{										//gênero
-						cout << "\nGenero: ";
-						
-						cin.ignore();
-						getline(cin,info.generoPrincipal);
-						
-						l1.imprimeCatalogoPorGenero(info.generoPrincipal);
-						
-						break;
-					}
-					case 5:{										//número de temporadas
-						cout << "\nNumero de temporadas\n";
-						int menorNumTemp = l1.menores(3);
-						int maiorNumTemp = l1.maiores(3);
-						cout << "Minimo = " << menorNumTemp << " Maior = " << maiorNumTemp << endl;
-						
-						int respostaTemporadas;
-						cin >> respostaTemporadas;
-						if(cin.fail()){
-							erro_Variavel(1);
-						}else{
-							//FAZER!!!!!!!!!!!!!
-							cout << "Numero de Temporadas: ";
-							
-							cin >> info.numTemporadas;
-							if(cin.fail()){
-								erro_Variavel(1);
-							}else{
-								l1.procuraAnimePorNumTemp(info.numTemporadas);
-							}
-						}
-						break;
-					}
-					case 6:{										//status
-						cout << "\n1)Em Andamento\n2)Finalizado\n";
-						cout << "Resposta(1 ou 2): ";
-						int respostaStatus;
-						cin >> respostaStatus;
-						if(cin.fail()){
-							erro_Variavel(1);
-						}else{
-							if(respostaStatus==1 or respostaStatus == 2){
-								l1.procuraAnimeStatus(respostaStatus);
-							}else{
-								mensagemErro();
-							}
-						}
-						break;
-					}
-					default:{
-						mensagemErro();
-						break;
-					}
+					}	
+					break;
 				}
-				break;
-			}
-			case 3:{												 // escrever/sobrescrever
-				int respostaMudanca;
-				cout << "\n1)Escrever\n2)Sobrescrever\n";
-				cout << "Resposta(1 ou 2): ";
+				case 2:{ // filtrar
+					cout << "\n1)Nome\n2)Ano de Lancamento\n3)Ano de Finalizacao\n4)Genero\n5)Numero de Temporadas\n6)Status\n";
+					cout << "Resposta(1, 2, 3, 4, 5 ou 6 ): "; 
 
-				cin >> respostaMudanca;
-				if(cin.fail()){
-					erro_Variavel(1);
-				}else{
-					switch(respostaMudanca){
-						case 1:{
-							int respostaEscrever;
-	
-							cout << "\nQuantos novos animes deseja escrever?\n";
+					int respostaFiltrar;
+					cin >> respostaFiltrar;
+					
+					switch(respostaFiltrar){
+						case 1:{ // nome
+							cout << "\nNome: ";
+							cin.ignore();
+							getline(cin, categorias.nomeAnime);
+							
+							listaPrincipal.procuraAnimeNome(categorias.nomeAnime);
+							
+							break;
+							}
+						case 2:{ // ano de lancamento
+							cout << "\nAno de lancamento\n";
+							int menorAnoLancamento = listaPrincipal.menores(1);
+							int maiorAnoLancamento = listaPrincipal.maiores(1);
+							
+							cout << "Minimo = " << menorAnoLancamento << " Maior = " << maiorAnoLancamento << endl;
 							cout << "Resposta: ";
-	
-							cin >> respostaEscrever;
+							
+							cin >> categorias.anoLancamento;
 							if(cin.fail()){
 								erro_Variavel(1);
 							}else{
-								if(respostaEscrever < 0){
-								mensagemErro();
+								if((categorias.anoLancamento <= maiorAnoLancamento) and (categorias.anoLancamento > 0)){
+									listaPrincipal.procuraAnimeAno(1, categorias.anoLancamento);
 								}else{
-									for(int i=0; i<respostaEscrever; i++){
-										cout << "\nEscreva os dados do "<< i+1 <<"o anime(ate o momento da insercao): \n";;
-										info.numeracao = tamanho+i+2;
-
-										cout << "Nome:";
-										cin.ignore();
-										getline(cin, info.nomeAnime);
-
-										cout <<"Temporadas: ";
-										cin >> info.numTemporadas;
-
-										cout << "Episodios: ";
-										cin >> info.numEpisodios;
-
-										cout << "Ano de Lancamento: ";
-										cin >> info.anoLancamento;
-
-										cout << "Ano de Finalizacao(=0 se Em Andamento): ";
-										cin >> info.anoFinalizacao;
-
-										cout << "Genero Principal: ";
-										cin.ignore();
-										getline(cin, info.generoPrincipal);
-										
-										if(info.anoFinalizacao == 0){
-											info.status = "Em Andamento";
-										}else{
-											info.status = "Finalizado";
-										}
-
-										int respostaAlteracoes;
-
-										cout << "\nDeseja salvar as alteracoes?\n";
-										cout << "1)Sim\n2)Nao\n";
-										cout << "Resposta(1 ou 2): ";
-
-										cin >> respostaAlteracoes;
-										if(cin.fail()){
-											erro_Variavel(1);
-										}else{
-											switch(respostaAlteracoes){
-												case 1:{
-												l1.insereAnimeFim(info);
-												tamanho++;
-												
-												l1.salvarArquivo();
-													cout << "Anime " << i+1 << " inserido\n";          
-													break;
-												}
-												case 2:{
-													cout << "\nResposta nao salva\n";
-													break;
-												}
-												default:{
-													mensagemErro();
-													break;
-												}
-											}
-										}
-									}
+									mensagemErro();
 								}
 							}
 							break;
-						}  
-						case 2:{									//sobrescrever
-							int posicaoDesejada;
-								
-							cout << "Qual posicao sera sobrescrevida?\n";
-							cout << "Minimo = 1 | Maximo = " << tamanho-1 << endl;
+						}
+						case 3:{ // ano de finalizacao
+							cout << "\nAno de finalizacao:\n";
+							int menorAnoFinalizacao = listaPrincipal.menores(2);
+							int maiorAnoFinalizacao = listaPrincipal.maiores(2);
+							cout << "(Minimo = (0 se em andamento) ou " << menorAnoFinalizacao << " | Maior = " << maiorAnoFinalizacao << ")" << endl;
 							cout << "Resposta: ";
-								
-							cin >> posicaoDesejada;
+							
+							cin >> categorias.anoFinalizacao;
 							if(cin.fail()){
-									erro_Variavel(1);
+								erro_Variavel(1);
 							}else{
-								if((posicaoDesejada >= 1) and (posicaoDesejada < tamanho)){
-									cout << "Insira os dados do anime(ate o momento da insercao):\n";
-										
-									info.numeracao = tamanho+2;
-		
-									cout << "Nome:";
-									cin.ignore();
-									getline(cin, info.nomeAnime);
-		
-									cout <<"Temporadas: ";
-									cin >> info.numTemporadas;
-									
-									if(cin.fail()){
-										erro_Variavel(1);
-									}else{
-										cout << "Episodios: ";
-										cin >> info.numEpisodios;
-										
-										if(cin.fail()){
-											erro_Variavel(1);
-										}else{
-											cout << "Ano de Lancamento: ";
-											cin >> info.anoLancamento;
-											
-											if(cin.fail()){
-												erro_Variavel(1);
-											}else{
-												cout << "Ano de Finalizacao(=0 se Em Andamento): ";
-												cin >> info.anoFinalizacao;
-												
-												if(cin.fail()){
-													erro_Variavel(1);
-												}else{
-													cout << "Genero Principal: ";
-													cin.ignore();
-													getline(cin, info.generoPrincipal);
-													
-													if(info.anoFinalizacao == 0){
-														info.status = "Em Andamento";
-													}else{
-														info.status = "Finalizado";
-													}
-													int respostaSalvar;
-													
-													cout << "\nSalvar as alteracoes?\n";
-													cout << "1)Sim\n2)Nao\n";
-													cout << "Resposta(1 ou 2): ";
-														
-													cin >> respostaSalvar;
-													if(cin.fail()){
-														erro_Variavel(1);
-													}else{
-														if(respostaSalvar== 1){ // salvar na lista e .csv
-														l1.sobrescreveAnimePosicaoDesejada(posicaoDesejada, info);
-															
-														l1.salvarArquivo();
-														cout << "\nAnime sobrescrito na posicao " << posicaoDesejada << " do catalogo\n";
-															
-														}else if(respostaSalvar==2){ // nao salvar
-															cout << "\nResposta nao salva\nRetornando ao comeco do codigo\n";
-														}else{
-															mensagemErro();
-														}
-													}
-												}
-											}
-										}	
-									}
+								if((categorias.anoFinalizacao <= maiorAnoFinalizacao) and(categorias.anoFinalizacao >=0)){
+									listaPrincipal.procuraAnimeAno(2, categorias.anoFinalizacao);
+								}else{
+									mensagemErro();
+								}
+							}
+							break;
+						}
+						case 4:{ // gênero
+							cout << "\nGenero: ";
+							
+							cin.ignore();
+							getline(cin,categorias.generoPrincipal);
+							
+							listaPrincipal.imprimeCatalogoPorGenero(categorias.generoPrincipal);
+							
+							break;
+						}
+						case 5:{ // número temporadas
+							cout << "\nNumero de temporadas\n";
+							int menorNumTemp = listaPrincipal.menores(3);
+							int maiorNumTemp = listaPrincipal.maiores(3);
+							cout << "Minimo = " << menorNumTemp << " Maior = " << maiorNumTemp << endl;
+							
+							int respostaTemporadas;
+							cin >> respostaTemporadas;
+							if(cin.fail()){
+								erro_Variavel(1);
+							}else{
+								cout << "Numero de Temporadas: ";
+								
+								cin >> categorias.numTemporadas;
+								if(cin.fail()){
+									erro_Variavel(1);
+								}else{
+									listaPrincipal.procuraAnimePorNumTemp(categorias.numTemporadas);
+								}
+							}
+							break;
+						}
+						case 6:{ // status
+							cout << "\n1)Em Andamento\n2)Finalizado\n";
+							cout << "Resposta(1 ou 2): ";
+
+							int respostaStatus;
+							cin >> respostaStatus;
+							if(cin.fail()){
+								erro_Variavel(1);
+							}else{
+								if(respostaStatus == 1 or respostaStatus == 2){
+									listaPrincipal.procuraAnimeStatus(respostaStatus);
 								}else{
 									mensagemErro();
 								}
@@ -1049,73 +871,250 @@ do{
 							break;
 						}
 					}
+					break;
 				}
-				break;
-			}
-			case 4:{ 												// remover
-				int respostaRemover;
-				
-				cout << "Remover:\n";
-				cout << "1)Nome\n2)Numeracao\n";
-				cout << "Resposta(1 ou 2): ";
-				
-				cin >> respostaRemover;
-				if(cin.fail()){
-					erro_Variavel(1);
-				}else{
-					switch(respostaRemover){
-						case 1:{									// remover por nome
-							cout << "Nome: ";
-							cin.ignore();
-							getline(cin, info.nomeAnime);
-							info.numeracao = 1;
-							
-							l1.removeAnime(1,info.numeracao,info.nomeAnime);
-							break;
-							}
-						case 2:{									//remover por numeração no catálogo
-							cout << "Numeracao: ";
-							cin >> info.numeracao;
-							if(cin.fail()){
-								erro_Variavel(1);
-							}else{
-								if((info.numeracao <= tamanho) and (info.numeracao > 0)){
-									info.nomeAnime = "a";
-									l1.removeAnime(2,info.numeracao, info.nomeAnime);
+				case 3:{  // escrever / sobrescrever
+					int respostaMudanca;
+					cout << "\n1)Escrever \n2)Sobrescrever\n";
+					cout << "Resposta(1 ou 2): ";
+
+					cin >> respostaMudanca;
+					if(cin.fail()){
+						erro_Variavel(1);
+					}else{
+						switch(respostaMudanca){
+							case 1:{ // escrever
+								cout << "\nQuantos novos animes deseja escrever?\n";
+								cout << "Resposta: ";
+
+								int respostaEscrever;
+								cin >> respostaEscrever;
+								if(cin.fail()){
+									erro_Variavel(1);
 								}else{
-									cout << "\nErro: numeracao fora do intervalo do catalogo, retornando ao comeco do codigo\n";
+									if(respostaEscrever < 0){
+									mensagemErro();
+									}else{
+										for(int i = 0; i < respostaEscrever; i++){
+											cout << "\nEscreva os dados do "<< i+1 <<"o anime(ate o momento da insercao): \n";;
+											categorias.numeracao = tamanho+i+2;
+
+											cout << "Nome:";
+											cin.ignore();
+											getline(cin, categorias.nomeAnime);
+
+											cout <<"Temporadas: ";
+											cin >> categorias.numTemporadas;
+
+											cout << "Episodios: ";
+											cin >> categorias.numEpisodios;
+
+											cout << "Ano de Lancamento: ";
+											cin >> categorias.anoLancamento;
+
+											cout << "Ano de Finalizacao(=0 se Em Andamento): ";
+											cin >> categorias.anoFinalizacao;
+
+											cout << "Genero Principal: ";
+											cin.ignore();
+											getline(cin, categorias.generoPrincipal);
+											
+											if(categorias.anoFinalizacao == 0){
+												categorias.status = "Em Andamento";
+											}else{
+												categorias.status = "Finalizado";
+											}
+
+											cout << "\nDeseja salvar as alteracoes?\n";
+											cout << "1)Sim\n2)Nao\n";
+											cout << "Resposta(1 ou 2): ";
+
+											int respostaAlteracoes;
+											cin >> respostaAlteracoes;
+											if(cin.fail()){
+												erro_Variavel(1);
+											}else{
+												switch(respostaAlteracoes){
+													case 1:{ // Salvar
+														listaPrincipal.insereAnimeFim(categorias);
+														tamanho++;
+														
+														listaPrincipal.salvarArquivo();
+														cout << "Anime " << i+1 << " inserido\n";          
+														break;
+													}
+													case 2:{ // não Salvar
+														cout << "\nResposta nao salva\n";
+														break;
+													}
+													default:{
+														mensagemErro();
+														break;
+													}
+												}
+											}
+										}
+									}
 								}
+								break;
+							}  
+							case 2:{ // sobrescrever	
+								cout << "Qual posicao sera sobrescrevida?\n";
+								cout << "Minimo = 1 | Maximo = " << tamanho-1 << endl;
+								cout << "Resposta: ";
+
+								int posicaoDesejada;
+								cin >> posicaoDesejada;
+								if(cin.fail()){
+										erro_Variavel(1);
+								}else{
+									if((posicaoDesejada >= 1) and (posicaoDesejada < tamanho)){
+										cout << "Insira os dados do anime(ate o momento da insercao):\n";
+											
+										categorias.numeracao = tamanho+2;
+			
+										cout << "Nome:";
+										cin.ignore();
+										getline(cin, categorias.nomeAnime);
+			
+										cout <<"Temporadas: ";
+										cin >> categorias.numTemporadas;
+										
+										if(cin.fail()){
+											erro_Variavel(1);
+										}else{
+											cout << "Episodios: ";
+											cin >> categorias.numEpisodios;
+											
+											if(cin.fail()){
+												erro_Variavel(1);
+											}else{
+												cout << "Ano de Lancamento: ";
+												cin >> categorias.anoLancamento;
+												
+												if(cin.fail()){
+													erro_Variavel(1);
+												}else{
+													cout << "Ano de Finalizacao(=0 se Em Andamento): ";
+													cin >> categorias.anoFinalizacao;
+													
+													if(cin.fail()){
+														erro_Variavel(1);
+													}else{
+														cout << "Genero Principal: ";
+														cin.ignore();
+														getline(cin, categorias.generoPrincipal);
+														
+														if(categorias.anoFinalizacao == 0){
+															categorias.status = "Em Andamento";
+														}else{
+															categorias.status = "Finalizado";
+														}
+														int respostaSalvar;
+														
+														cout << "\nSalvar as alteracoes?\n";
+														cout << "1)Sim \n2)Nao\n";
+														cout << "Resposta(1 ou 2): ";
+															
+														cin >> respostaSalvar;
+														if(cin.fail()){
+															erro_Variavel(1);
+														}else{
+															if(respostaSalvar== 1){ // salvar na lista e .csv
+															listaPrincipal.sobrescreveAnimePosicaoDesejada(posicaoDesejada, categorias);
+																
+															listaPrincipal.salvarArquivo();
+															cout << "\nAnime sobrescrito na posicao " << posicaoDesejada << " do catalogo\n";
+																
+															}else if(respostaSalvar==2){ // não salvar
+																cout << "\nResposta nao salva\nRetornando ao comeco do codigo\n";
+															}else{
+																mensagemErro();
+															}
+														}
+													}
+												}
+											}	
+										}
+									}else{
+										mensagemErro();
+									}
+								}
+								break;
 							}
-							break;
-						}
-						default:{
-							mensagemErro();
-							break;
+							default:{
+								mensagemErro();
+								break;
+							}
 						}
 					}
+					break;
 				}
-				break;
-			}
-			case 5:{												 // encerrar programa
-				cout << "\nPrograma Finalizado\n";
-				break;
-			}
-			default:{
-				mensagemErro();
-				break;
-			}
-		} 
-	}
+				case 4:{ // remover anime
+					cout << "Remover:\n";
+					cout << "1)Nome \n2)Numeracao\n";
+					cout << "Resposta(1 ou 2): ";
 
-}while(resposta!= 5);
+					int respostaRemover;
+					cin >> respostaRemover;
+					if(cin.fail()){
+						erro_Variavel(1);
+					}else{
+						switch(respostaRemover){
+							case 1:{ // remover anime pelo nome do próprio
+								cout << "Nome: ";
+								cin.ignore();
+								getline(cin, categorias.nomeAnime);
+								categorias.numeracao = 1;
+								
+								listaPrincipal.removeAnime(1, categorias.numeracao, categorias.nomeAnime);
+								break;
+								}
+							case 2:{ // remover anime pela numeração no catálogo
+								cout << "Numeracao: ";
+								cin >> categorias.numeracao;
+								if(cin.fail()){
+									erro_Variavel(1);
+								}else{
+									if((categorias.numeracao <= tamanho) and (categorias.numeracao > 0)){
+										categorias.nomeAnime = "a"; // nome padrão 
+										listaPrincipal.removeAnime(2, categorias.numeracao, categorias.nomeAnime);
+									}else{
+										cout << "\nErro: numeracao fora do intervalo do catalogo, retornando ao comeco do codigo\n";
+									}
+								}
+								break;
+							}
+							default:{
+								mensagemErro();
+								break;
+							}
+						}
+					}
+					break;
+				}
+				case 5:{ // encerrar programa
+					cout << "\nPrograma Finalizado\n";
+					break;
+				}
+				default:{
+					mensagemErro();
+					break;
+				}
+			} 
+		}
+
+	}while(resposta!= 5);
 	return 0;
 }
 
+// Mensagem de erro genérica
 void mensagemErro(){
 	cout << "\nErro: resposta FORA do intervalo permitido\n";
 	cout << "Retornando ao comeco do codigo\n";
 }
 
+// interface em Português Brasil
 void menu_ptbr(){
     cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 	cout << "|\n|				<CATALOGO DE ANIMES>\n";
@@ -1126,136 +1125,104 @@ void menu_ptbr(){
 	cout << "|5) Encerrar o Programa\n|";
 	cout << endl << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 	cout << "-> Resposta (1 ate 5): ";
-	
 }
 
-
-void erro_Variavel(int t){
+// função para retornar uma mensagem de erro para quando o usuário digitar o valor de uma variável sendo diferente do requerido pelo programa
+void erro_Variavel(int tipoVariavel){
 	cin.clear();
 	cin.ignore(10000, '\n');
 
 	cout << "\nErro: Tipo de variavel escrito invalido -> CORRETO: ";
-	
-	switch(t){
-		case 1:{														 // int
+	switch(tipoVariavel){
+		case 1:{
 			cout << "'INT'\n";
 			break;
 		}
-		case 2:{ 														 // string
+		case 2:{
 			cout << "'STRING'\n";
 			break;
 		}
-		case 3:{														  // bool
+		case 3:{
 			cout << "'BOOL'\n";
 			break;
 		}
-		
 	}
 	cout << endl;
-	
 }
 
-																		// Função para trocar dois elementos
-void trocar(anime &a, anime &b){
-	anime aux = a;
-	a = b;
-	b = aux;
-	
+// Função para trocar dois elementos de posição
+void trocarValores(anime &elemento1, anime &elemento2){
+	anime listaTroca = elemento1;
+	elemento1 = elemento2;
+	elemento2 = listaTroca;
 }
 
-																		// Partição do Quick Sort Nome
-int particaoNome(anime vet[], int menor, int maior){
-	string aux = vet[maior].nomeAnime;
+// partição da função de ordernar a lista
+int quickSortPartição(anime animes[], int menor, int maior, string objeto){
+	string valorSelecionado;
+	if(objeto == "generoPrincipal"){
+		valorSelecionado = animes[maior].generoPrincipal;
+	}else if(objeto == "anoLancamento"){
+		valorSelecionado = animes[maior].anoLancamento;
+	}else{
+		valorSelecionado = animes[maior].nomeAnime;
+	}
+
 	int i = menor - 1;
-	
 	for (int j = menor; j <= maior - 1; j++) {
-		if (vet[j].nomeAnime < aux) {
-			i++;
-			trocar(vet[i], vet[j]);
+        string atual;
+        if (objeto == "generoPrincipal"){
+            atual = animes[j].generoPrincipal;
+		}else if (objeto == "anoLancamento"){
+            atual = to_string(animes[j].anoLancamento);
+		}else{
+            atual = animes[j].nomeAnime;
 		}
-	}
-	trocar(vet[i + 1], vet[maior]);
+        if (atual < valorSelecionado) {
+            i++;
+            trocarValores(animes[i], animes[j]);
+        }
+    }
+	trocarValores(animes[i + 1], animes[maior]);
 	return (i + 1);
-		
 }
 
-																		// Função Quick Sort Nome
-void quickSortNome(anime vet[], int menor, int maior){
-	if (menor < maior){
-		int pivo = particaoNome(vet, menor, maior);
-		quickSortNome(vet, menor, pivo - 1);
-		quickSortNome(vet, pivo + 1, maior);
-		
+// função para ordernar a lista baseando-se em uma categoria
+void quickSort(anime animes[], int menor, int maior, string categoria){
+	if(categoria == "genero" or categoria == "lancamento" or categoria == "nome"){
+		if (menor < maior){
+			int pivo;
+			if(categoria == "genero"){
+				pivo = quickSortPartição(animes, menor, maior, "generoPrincipal");
+			}else if(categoria == "lancamento"){
+				pivo = quickSortPartição(animes, menor, maior, "anoLancamento");
+			}else{
+				pivo = quickSortPartição(animes, menor, maior, "nomeAnime");
+			}
+			quickSort(animes, menor, pivo - 1, categoria);
+			quickSort(animes, pivo + 1, maior, categoria);
+		}		
+	}else{
+		cout << "Erro: Nenhuma categoria válida foi selecionada" << endl;
 	}
-		
 }
 
-																		// Partição do Quick Sort Lancamentos
-int particaoLancamentos(anime vet[], int menor, int maior){
-	int aux = vet[maior].anoLancamento;
-	int i = menor - 1;
-	
-	for (int j = menor; j <= maior - 1; j++) {
-		if (vet[j].anoLancamento > aux){
-			i++;
-			trocar(vet[i], vet[j]);
-		}
-	}
-	trocar(vet[i + 1], vet[maior]);
-	return (i + 1);
-		
-}
-
-																		// Função Quick Sort Lancamentos
-void quickSortLancamentos(anime vet[], int menor, int maior){
-	if (menor < maior){
-		int pivo = particaoLancamentos(vet, menor, maior);
-		quickSortLancamentos(vet, menor, pivo - 1);
-		quickSortLancamentos(vet, pivo + 1, maior);
-	}
-		
-}
-
-																		// Partição do Quick Sort Genero
-int particaoGenero(anime vet[], int menor, int maior){
-	string aux = vet[maior].generoPrincipal;
-	int i = menor - 1;
-	
-	for (int j = menor; j <= maior - 1; j++){
-		if (vet[j].generoPrincipal < aux){
-			i++;
-			trocar(vet[i], vet[j]);
-		}
-	}
-	trocar(vet[i + 1], vet[maior]);
-	return (i + 1);
-		
-}
-
-																		// Função Quick Sort Genero
-void quickSortGenero(anime vet[], int menor, int maior){
-	if (menor < maior){
-		int pivo = particaoGenero(vet, menor, maior);
-		quickSortGenero(vet, menor, pivo - 1);
-		quickSortGenero(vet, pivo + 1, maior);
-	}
-		
-}
-
-void carregaDados(anime& i, string nomeArquivo, listaDupla& lista, int& tam){
-	ifstream entrada (nomeArquivo);
+void carregaDados(anime& i, string arquivoCSV, listaDupla& lista, int& tam){
+	// função para recuperar os dados armazenados no arquivo .csv
+	ifstream entrada(arquivoCSV);
 
 	if(entrada){
 		string linha;
-		getline(entrada, linha);										// descartar as 2 linhas de introdução
-		getline(entrada, linha);										// descartar as 2 linhas de introdução
+
+		// descartar as 2 linhas de introdução
+		getline(entrada, linha);
+		getline(entrada, linha);
 
 	}else{
 		cout << "\nErro: Nao foi possivel abrir o arquivo\n ";
 	}
 
 	while(entrada){
-		
 		string lixo;
 
 		entrada >> i.numeracao;
@@ -1287,6 +1254,6 @@ void carregaDados(anime& i, string nomeArquivo, listaDupla& lista, int& tam){
 		lista.insereAnimeFim(i);
 	}
 	
-		lista.removeAnimeFim();											 // erro
+		lista.removeAnimeFim(); // erro
 		
 	}
