@@ -29,7 +29,6 @@ noh::noh(anime i){
 	proximo 	= NULL;
 	anterior 	= NULL;
 	categorias 	= i; 
-
 }
 
 class listaDupla{
@@ -70,7 +69,6 @@ class listaDupla{
 		
 		int menores(int opcao);
 		int maiores(int opcao);
-		
 };
 
 // construtor
@@ -78,7 +76,6 @@ listaDupla::listaDupla(){
 	primeiro 		= NULL;
 	ultimo 			= NULL;
 	tamanhoLista 	= 0;
-
 }
 
 // destrutor
@@ -87,12 +84,10 @@ listaDupla::~listaDupla(){
 		removeAnimeInicio();
 	}
 	tamanhoLista = 0;
-	
 }
 
 bool listaDupla::listaVazia(){
 	return (tamanhoLista == 0);
-	
 }
 
 // insere anime em uma lista vazia
@@ -102,7 +97,6 @@ void listaDupla::insereAnimeVazia(anime info){
 	primeiro = novoAnime;
 	ultimo = novoAnime;
 	tamanhoLista++;
-	
 }
 
 // insere anime no início da lista
@@ -116,7 +110,6 @@ void listaDupla::insereAnimeInicio(anime info){
 		primeiro = novoAnime;
 		tamanhoLista++;
 	}
-	
 }
 
 // insere anime no fim da lista
@@ -142,7 +135,6 @@ void listaDupla::sobrescreveAnimePosicaoDesejada(int posicaoDesejada, anime dado
 		anime = anime->proximo;
 	}
 	anime->categorias = dados;
-	
 }
 
 void listaDupla::removeAnimeInicio(){
@@ -154,7 +146,6 @@ void listaDupla::removeAnimeInicio(){
 		primeiro 		= nullptr;
 		ultimo 			= nullptr;
 		tamanhoLista	= 0;
-
 	}else{
 		noh* anime = primeiro;
 		primeiro = primeiro->proximo;
@@ -162,7 +153,6 @@ void listaDupla::removeAnimeInicio(){
 
 		delete anime;
 		tamanhoLista--;
-
 		}
 	}
 }
@@ -326,7 +316,6 @@ void listaDupla::imprimeAnime(noh* anime){
 	cout << "- GeneroPrincipal: " 	<< anime->categorias.generoPrincipal 	<< endl;
 	cout << "- Status: " 			<< anime->categorias.status 			<< endl;
 	cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
-	
 }
 
 void listaDupla::imprimeIntervaloCatalogo(int inicio, int fim){
@@ -476,7 +465,6 @@ void listaDupla::preencherVetor(anime catalogo[]){
 		catalogo[i] = temp->categorias;
 		temp = temp->proximo;
 	}
-	
 }
 
 // retorna o menor valor de uma categoria de um anime
@@ -599,7 +587,6 @@ void carregaDados(anime& i, string arquivoCSV, listaDupla& lista, int& tam);
 
 
 int main(){
-		
 	listaDupla listaPrincipal;
 	anime categorias;
 
@@ -1255,5 +1242,4 @@ void carregaDados(anime& i, string arquivoCSV, listaDupla& lista, int& tam){
 	}
 	
 		lista.removeAnimeFim(); // erro
-		
 	}
